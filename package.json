@@ -1,0 +1,45 @@
+{
+  "name": "awp-arb-bot",
+  "version": "0.0.1",
+  "description": "keep uniswap price on target",
+  "keywords": [],
+  "license": "MIT",
+  "type": "module",
+  "author": "Dan Matthews <dan@cryptobuilders.io>",
+  "homepage": "https://github.com/pie-network/awp-arb-bot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pie-network/awp-arb-bot.git"
+  },
+  "bugs": {
+    "mail": "dan@cryptobuilders.io",
+    "url": "https://github.com/pie-network/awp-arb-bot/issues"
+  },
+  "main": "lib/index.js",
+  "scripts": {
+    "lint": "eslint src",
+    "pm2": "pm2 start ecosystem.config.js",
+    "start": "npm run lint && node -r esm src/index.js",
+    "wallet": "node -r esm src/createWallet.js"
+  },
+  "dependencies": {
+    "@uniswap/sdk": "^1.0.0-beta.4",
+    "bignumber.js": "^9.0.0",
+    "esm": "^3.2.25",
+    "ethers": "4.0.30",
+    "node-fetch": "^2.6.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "coveralls": "3.0.4",
+    "eslint": "5.16.0",
+    "eslint-config-airbnb-base": "13.1.0",
+    "eslint-plugin-import": "2.17.3",
+    "flow-bin": "0.101.1",
+    "flow-typed": "2.5.2",
+    "fs-file-tree": "1.0.7",
+    "jest": "24.8.0",
+    "nodemon": "^1.19.1",
+    "rimraf": "2.6.3"
+  }
+}
