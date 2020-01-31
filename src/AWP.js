@@ -19,8 +19,8 @@ export class AWP {
   }
 
   async indexPrice() {
+    console.log('Fetching asset allocation');
     const { assets } = await fetch(`${this.url}/portfolio/awp+++`).then(r => r.json());
-    console.log(assets);
     let price = BigNumber(0);
 
     await Promise.all(
@@ -34,6 +34,6 @@ export class AWP {
       }),
     );
 
-    return price;
+    return price.dividedBy(10);
   }
 }

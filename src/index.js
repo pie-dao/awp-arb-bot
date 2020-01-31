@@ -11,7 +11,7 @@ console.log('Configuring bot...');
 const config = new Configuration(apps[0].env);
 
 const {
-  // exchangeContract,
+  exchangeContract,
   network,
 } = config;
 
@@ -45,7 +45,13 @@ const checkPrice = async (evt) => {
 
   console.log('Target AWP++ Price in ETH', targetPrice.dividedBy(ethPrice).toFixed());
 
-  await awpExchange.arbitrate(targetPrice.dividedBy(ethPrice));
+  const offset = awpPrice.dividedBy(targetPrice.dividedBy(ethPrice));
+
+  console.log('Offset', offset.toFixed());
+
+  if (offset.isGreaterThan(1.01) || offset.isLessThan(0.99)) {
+    await awpExchange.arbitrate(targetPrice.dividedBy(ethPrice));
+  }
 };
 
 const watcher = async () => {
@@ -56,7 +62,7 @@ const watcher = async () => {
   }
 
   lastFastest = fastest;
-  console.log(`Gas price (fastest): ${fastest.toString()}`);
+  // console.log(`Gas price (fastest): ${fastest.toString()}`);
 };
 
 // Initialization
@@ -74,8 +80,8 @@ const main = async () => {
   initWatcher();
 
   // listen to EthPurchase
-  // exchangeContract.on('EthPurchase', checkPrice);
-  // exchangeContract.on('TokenPurchase', checkPrice);
+  exchangeContract.on('EthPurchase', checkPrice);
+  exchangeContract.on('TokenPurchase', checkPrice);
 
   checkPrice();
 };

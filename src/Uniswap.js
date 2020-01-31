@@ -27,9 +27,11 @@ export class Uniswap {
     // get the current amount of eth
     const ethBalance = await this.ethBalance();
     const tokenBalance = await this.tokenBalance();
+    console.log('ethBalance', ethBalance.toString());
+    console.log('tokenBalance', tokenBalance.toString());
 
     // https://github.com/MickdeGraaf/defied/blob/master/utils/src/index.ts#L73
-    const largeNumber = new BigNumber(10000000000000000000000);
+    // const largeNumber = new BigNumber(10000000000000000000000);
 
     const k = ethBalance.multipliedBy(tokenBalance);
 
@@ -57,12 +59,16 @@ export class Uniswap {
         const overrides = {
           gasLimit: 200000,
           gasPrice: ethers.utils.parseUnits('30', 'gwei'),
-          value: a.minus(ethBalance).decimalPlaces(0),
+          value: a.minus(ethBalance).decimalPlaces(0).toString(),
         };
 
         console.log('Buying tokens', overrides);
 
-        await this.contract.ethToTokenSwapInput(largeNumber, getTimeStamp(100000000), overrides);
+        await this.contract.ethToTokenSwapInput(
+          '1',
+          getTimeStamp(100000000),
+          overrides,
+        );
       } else { // if eth amount needs to go down sell some tokens
         const overrides = {
           gasLimit: 200000,
